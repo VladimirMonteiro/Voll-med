@@ -9,7 +9,6 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_PROFILES_ACTIVE: dev
       DB_URL: jdbc:postgresql://db:5432/vollmed
       DB_USERNAME: postgres
       DB_PASSWORD: root
