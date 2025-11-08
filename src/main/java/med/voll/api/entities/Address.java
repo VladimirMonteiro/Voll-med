@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import med.voll.api.dto.address.DataAddress;
 
 @Embeddable
 @Getter
@@ -20,4 +21,14 @@ public class Address {
     private String complement;
     private String city;
     private String uf;
+
+    public Address(DataAddress address) {
+        this.publicPlace = address.publicPlace();
+        this.neighborhood = address.neighborhood();
+        this.cep = address.cep();
+        this.number = address.number();
+        this.complement = address.complement();
+        this.city = address.city();
+        this.uf = address.uf();
+    }
 }
