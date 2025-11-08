@@ -1,0 +1,43 @@
+services:
+  app:
+    image: maven:3.9.6-eclipse-temurin-21
+    container_name: voll_med_api
+    working_dir: /app
+    volumes:
+      - ./:/app                # monta o código local no container
+      - ~/.m2:/root/.m2        # cache de dependências do Maven
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DB_URL: jdbc:postgresql://db:5432/vollmed
+      DB_USERNAME: postgres
+      DB_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    command: mvn spring-boot:run
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  db:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: vollmed
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
