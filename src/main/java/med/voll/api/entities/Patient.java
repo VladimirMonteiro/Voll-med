@@ -3,6 +3,7 @@ package med.voll.api.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import med.voll.api.dto.Patient.CreatePatientRequestDto;
+import med.voll.api.dto.Patient.UpdatePatientRequestDto;
 
 @Entity
 @Getter
@@ -30,5 +31,12 @@ public class Patient {
         this.email = dto.email();
         this.phone = dto.phone();
         this.address = new Address(dto.address());
+    }
+
+    public void update (UpdatePatientRequestDto dto) {
+        if (dto.name() != null) this.name = dto.name();
+        if (dto.email() != null) this.email = dto.email();
+        if (dto.phone() != null) this.phone = dto.phone();
+        if (dto.address() != null) this.address.update(dto.address());
     }
 }

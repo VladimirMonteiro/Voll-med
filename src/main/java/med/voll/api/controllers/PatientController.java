@@ -3,6 +3,7 @@ package med.voll.api.controllers;
 import lombok.RequiredArgsConstructor;
 import med.voll.api.dto.Patient.CreatePatientRequestDto;
 import med.voll.api.dto.Patient.ListDataPatient;
+import med.voll.api.dto.Patient.UpdatePatientRequestDto;
 import med.voll.api.entities.Patient;
 import med.voll.api.repositories.PatientRepository;
 import org.springframework.data.domain.Page;
@@ -25,5 +26,11 @@ public class PatientController {
     @GetMapping
     public Page<ListDataPatient> findAll (@PageableDefault(size = 10, sort = {"name"}) Pageable pageable) {
         return patientRepository.findAll(pageable).map(ListDataPatient::new);
+    }
+
+    @PutMapping
+    public void update(@RequestBody UpdatePatientRequestDto dto) {
+        var patient = patientRepository.getReferenceById(dto.id());
+        patient.update(dto);
     }
 }
