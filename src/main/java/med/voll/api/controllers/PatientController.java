@@ -33,4 +33,9 @@ public class PatientController {
         var patient = patientRepository.getReferenceById(dto.id());
         patient.update(dto);
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        patientRepository.deleteById(id);
+    }
 }
