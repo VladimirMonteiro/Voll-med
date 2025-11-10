@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.print.Doc;
+
 @RestController
 @RequestMapping("/doctors")
 @RequiredArgsConstructor
@@ -54,5 +56,11 @@ public class DoctorController {
         var doctor = doctorRepository.getReferenceById(id);
         doctor.delete();
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<DoctorDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(new DoctorDto(doctorRepository.getReferenceById(id)));
     }
 }
