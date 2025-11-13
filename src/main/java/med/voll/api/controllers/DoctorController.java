@@ -38,7 +38,7 @@ public class DoctorController {
     @GetMapping
     @Transactional(readOnly = true)
     public ResponseEntity<Page<ListDataDoctor>> findAll (@PageableDefault(size = 10, sort = {"name"}) Pageable pageable) {
-        var page = doctorRepository.findAllActiveTrue(pageable).map(ListDataDoctor::new);
+        var page = doctorRepository.findAllByActiveTrue(pageable).map(ListDataDoctor::new);
         return ResponseEntity.ok().body(page);
     }
 

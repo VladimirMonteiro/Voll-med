@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
-    Page<Doctor> findAllActiveTrue (Pageable pageable);
+    Page<Doctor> findAllByActiveTrue (Pageable pageable);
 }
