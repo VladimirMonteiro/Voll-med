@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 
 import med.voll.api.entities.User;
 
@@ -33,6 +35,19 @@ public class TokenService {
 
         } catch (JWTCreationException e) {
             throw new RuntimeException("Erro ao gerar o token.");
+        }
+    }
+
+    public String validateToken(String tokenJWT) {
+        try {
+            var algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+            .withIssuer("API Voll Med").build()
+            .verify(tokenJWT)
+            .getSubject();
+           
+        } catch (Exception e) {
+            throw new RuntimeException("Token JWT inválido ou inspirado");
         }
     }
 
