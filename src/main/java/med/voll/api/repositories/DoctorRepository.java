@@ -17,10 +17,11 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     @Query("""
             SELECT d FROM Doctor d
             WHERE
-            m.active = true
+            d.active = true
             AND
-            m.specialty = :specialty
-            m.id not in(
+            d.specialty = :specialty
+            AND
+            d.id not in(
                 SELECT c.doctor.id FROM Consult c
                 WHERE
                 c.date = :date
