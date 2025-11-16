@@ -12,7 +12,6 @@ services:
       DB_URL: jdbc:postgresql://db:5432/vollmed
       DB_USERNAME: postgres
       DB_PASSWORD: root
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     command: mvn spring-boot:run
     depends_on:
       - db
