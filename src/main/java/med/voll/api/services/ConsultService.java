@@ -1,6 +1,7 @@
 package med.voll.api.services;
 
 import lombok.RequiredArgsConstructor;
+import med.voll.api.dto.consult.CancelConsultRequestDto;
 import med.voll.api.dto.consult.CreateConsultRequestDto;
 import med.voll.api.entities.Consult;
 import med.voll.api.entities.Doctor;
@@ -31,7 +32,7 @@ public class ConsultService {
 
         var doctor = chooseDoctor(dto);
         var patient = patientRepository.findById(dto.PatientId()).get();
-        var consult = new Consult(null, doctor, patient, dto.date());
+        var consult = new Consult(null, doctor, patient, dto.date(), null);
         consultRepository.save(consult);
     }
 
@@ -45,5 +46,14 @@ public class ConsultService {
         }
 
         return doctorRepository.chooseRandomDoctorAvailable(dto.specialty(), dto.date());
+    }
+
+    public void cancelConsult(CancelConsultRequestDto dto) {
+        if (!consultRepository.existsById(dto.idConsult())) {
+            throw new EntityValidationException("Id da consulta informada não encontrado.");
+        }
+
+        var consult = consultRepository.getReferenceById(dto.idConsult());
+        consult.cancel(dto.reasonCancellation());
     }
 }

@@ -2,6 +2,7 @@ package med.voll.api.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import med.voll.api.entities.enums.ReasonCancellation;
 
 import java.time.LocalDateTime;
 
@@ -26,4 +27,11 @@ public class Consult {
     private Patient patient;
 
     private LocalDateTime date;
+
+    @Enumerated(EnumType.STRING)
+    private ReasonCancellation reasonCancellation;
+
+    public void cancel(ReasonCancellation reasonCancellation) {
+        this.reasonCancellation = reasonCancellation;
+    }
 }
