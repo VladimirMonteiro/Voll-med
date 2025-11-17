@@ -42,10 +42,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     private String getToken(HttpServletRequest request) {
         var authorizationHeader = request.getHeader("Authorization");
 
-        if (authorizationHeader == null) {
-            throw new RuntimeException("Token JTW não enviado");
-        }
-
+        if(authorizationHeader == null) return  null;
         return authorizationHeader.replace("Bearer ", "");
     }
 
